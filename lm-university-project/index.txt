@@ -1,0 +1,230 @@
+1- Build a database with the following tables and Foreign key relationships between the tables
+
+1.1 Database
+
+CREATE SCHEMA `lm_university_project_schema` ;
+
+1.2 Students table
+
+CREATE TABLE `lm_university_project_schema`.`students` (
+  `students_id` INT NOT NULL AUTO_INCREMENT,
+  `students_name` VARCHAR(100) NOT NULL,
+  `students_email` VARCHAR(80) NOT NULL,
+  PRIMARY KEY (`students_id`),
+  UNIQUE INDEX `students_id_UNIQUE` (`students_id` ASC) VISIBLE,
+  UNIQUE INDEX `students_email_UNIQUE` (`students_email` ASC) VISIBLE);
+
+1.3 Courses table
+
+CREATE TABLE `lm_university_project_schema`.`courses` (
+  `courses_id` INT NOT NULL AUTO_INCREMENT,
+  `courses_name` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`courses_id`),
+  UNIQUE INDEX `courses_id_UNIQUE` (`courses_id` ASC) VISIBLE);
+
+1.4 Professors table
+
+CREATE TABLE `lm_university_project_schema`.`professors` (
+  `professors_id` INT NOT NULL AUTO_INCREMENT,
+  `professors_name` VARCHAR(100) NOT NULL,
+  `professors_email` VARCHAR(80) NOT NULL,
+  PRIMARY KEY (`professors_id`),
+  UNIQUE INDEX `professors_id_UNIQUE` (`professors_id` ASC) VISIBLE,
+  UNIQUE INDEX `professors_email_UNIQUE` (`professors_email` ASC) VISIBLE);
+
+1.5 Grades table
+
+CREATE TABLE `lm_university_project_schema`.`grades` (
+  `grades_id` INT NOT NULL AUTO_INCREMENT,
+  `grades_grade` DECIMAL(4,2) NOT NULL,
+  `grades_students_id` INT NOT NULL,
+  `grades_courses_id` INT NOT NULL,
+  `grades_professors_id` INT NOT NULL,
+  PRIMARY KEY (`grades_id`),
+  UNIQUE INDEX `grades_id_UNIQUE` (`grades_id` ASC) VISIBLE,
+  INDEX `grades_students_id_idx` (`grades_students_id` ASC) VISIBLE,
+  INDEX `grades_courses_id_idx` (`grades_courses_id` ASC) VISIBLE,
+  INDEX `grades_professors_id_idx` (`grades_professors_id` ASC) VISIBLE,
+  CONSTRAINT `grades_students_id`
+    FOREIGN KEY (`grades_students_id`)
+    REFERENCES `lm_university_project_schema`.`students` (`students_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `grades_courses_id`
+    FOREIGN KEY (`grades_courses_id`)
+    REFERENCES `lm_university_project_schema`.`courses` (`courses_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `grades_professors_id`
+    FOREIGN KEY (`grades_professors_id`)
+    REFERENCES `lm_university_project_schema`.`professors` (`professors_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+
+2- Create a script that populates all of the database tables with sample data
+
+USE lm_university_project_schema;
+
+-- Students data
+INSERT INTO students(students_name, students_email)
+VALUES ('Student1', 'student1@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student2', 'student2@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student3', 'student3@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student4', 'student4@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student5', 'student5@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student6', 'student6@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student7', 'student7@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student8', 'student8@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student9', 'student9@test.com');
+INSERT INTO students(students_name, students_email)
+VALUES ('Student10', 'student10@test.com');
+
+-- Courses data
+INSERT INTO courses(courses_name)
+VALUES ('Arte');
+INSERT INTO courses(courses_name)
+VALUES ('Geografía');
+INSERT INTO courses(courses_name)
+VALUES ('Historia de España');
+INSERT INTO courses(courses_name)
+VALUES ('Filosofía');
+INSERT INTO courses(courses_name)
+VALUES ('Mitología');
+INSERT INTO courses(courses_name)
+VALUES ('Latín');
+
+-- Professors data
+INSERT INTO professors(professors_name, professors_email)
+VALUES ('Professor1', 'professor1@test.com');
+INSERT INTO professors(professors_name, professors_email)
+VALUES ('Professor2', 'professor2@test.com');
+INSERT INTO professors(professors_name, professors_email)
+VALUES ('Professor3', 'professor3@test.com');
+INSERT INTO professors(professors_name, professors_email)
+VALUES ('Professor4', 'professor4@test.com');
+
+-- Grades data
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (1,1,1,7.5);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (1,2,1,9.4);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (1,3,1,6.6);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (1,4,1,4.8);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (1,5,1,8.3);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (1,6,1,2.9);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (2,7,2,3.2);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (2,8,2,8.7);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (2,9,2,6.5);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (2,10,2,7.75);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (2,1,2,4.4);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (3,3,3,8.2);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (3,6,3,9.8);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (3,9,3,7.4);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (4,2,4,6.75);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (4,4,4,7.2);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (4,9,4,5.8);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (5,1,1,3.9);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (5,9,1,8.65);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (6,3,2,6.1);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (6,7,2,7.85);
+INSERT INTO grades(grades_courses_id, grades_students_id, grades_professors_id, grades_grade)
+VALUES (6,9,2,9.45);
+
+3- SQL query scripts for:
+
+3.1 The average grade that is given by each professor
+
+USE lm_university_project_schema;
+
+SELECT
+	p.professors_name,
+    AVG(g.grades_grade) AS 'Average given grade'
+FROM grades g
+JOIN professors p
+ON g.grades_professors_id = p.professors_id
+GROUP BY g.grades_professors_id;
+
+3.2 The top grades for each student
+
+USE lm_university_project_schema;
+
+SELECT
+	s.students_name,
+	MAX(g.grades_grade) AS 'Top grade'
+FROM grades g
+JOIN students s
+ON g.grades_students_id = s.students_id
+GROUP BY g.grades_students_id;
+
+3.3 Sort students by the courses that they are enrolled in
+
+USE lm_university_project_schema;
+
+SELECT
+	s.students_name AS 'Name',
+    c.courses_name AS 'Course'
+FROM grades g
+JOIN students s
+ON g.grades_students_id = s.students_id
+JOIN courses c
+ON g.grades_courses_id = c.courses_id
+ORDER BY g.grades_courses_id ASC;
+
+3.4 Create a summary report of courses and their average grades, sorted by the most challenging course (course with the lowest average grade) to the easiest course
+
+USE lm_university_project_schema;
+
+SELECT
+    c.courses_name AS 'Course',
+    AVG(g.grades_grade) AS grade_average
+FROM grades g
+JOIN courses c
+ON g.grades_courses_id = c.courses_id
+GROUP BY g.grades_courses_id
+ORDER BY grade_average ASC;
+
+3.5 Finding which student and professor have the most courses in common
+
+USE lm_university_project_schema;
+
+SELECT
+	s.students_name,
+    p.professors_name,
+    COUNT(DISTINCT c.courses_id) AS courses_in_common
+FROM grades g
+JOIN students s
+ON g.grades_students_id = s.students_id
+JOIN professors p
+ON g.grades_professors_id = p.professors_id
+JOIN courses c
+ON g.grades_courses_id = c.courses_id
+GROUP BY s.students_name, p.professors_name
+ORDER BY courses_in_common DESC
+LIMIT 4;
